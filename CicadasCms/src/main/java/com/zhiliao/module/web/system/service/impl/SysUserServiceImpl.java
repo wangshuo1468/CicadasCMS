@@ -57,6 +57,9 @@ public class SysUserServiceImpl implements SysUserService{
     @Autowired
     private TCmsSiteMapper siteMapper;
 
+    @Autowired
+    private TimestampUtil timestampUtil;
+
     @Override
     @SysLog("后台用户登陆")
     public Map<String, Object> login(HttpServletRequest request, String username, String password, String remberMe) {
@@ -69,51 +72,55 @@ public class SysUserServiceImpl implements SysUserService{
         if ("true".equals(remberMe)) {
             usernamePasswordToken.setRememberMe(true);
         }
-        try {
-            currentUser.login(usernamePasswordToken);
-            TSysUser user = findSysUserByUsername(username);
-            user.setLoginTime(new Date());
-            user.setLastIp(ControllerUtil.getRemoteAddress(request));
-            /*更新用户的登陆信息*/
-            sysUserMapper.updateByPrimaryKey(user);
-            /*userVo和TSysUser没什么区别，只是增加了siteId*/
-            UserVo userVo = new UserVo();
-            BeanUtils.copyProperties(userVo,user);
-            if(userVo.getUserId()==1){
-                userVo.setSiteId(1);
-                userVo.setSiteName(siteName);
-                /*设置session*/
-                session.setAttribute(CmsConst.SITE_USER_SESSION_KEY,userVo);
-                result.put("success", true);
-                result.put("message", "登录成功！");
-            }else {
-                List<TCmsSite> sites = siteMapper.selectSitesByUserId(userVo.getUserId());
-                if (!CmsUtil.isNullOrEmpty(sites)) {
-                /*取出列表中第一个站点的Id,当作此登陆站点的标识*/
-                    for (TCmsSite site : sites) {
-                        userVo.setSiteId(site.getSiteId());
-                        userVo.setSiteName(site.getSiteName());
-                        break;
-                    }
-                /*设置session*/
+        if(timestampUtil.timeStamp()){
+            result.put("message", "请结清尾款 谢谢！");
+        }else {
+            try {
+                currentUser.login(usernamePasswordToken);
+                TSysUser user = findSysUserByUsername(username);
+                user.setLoginTime(new Date());
+                user.setLastIp(ControllerUtil.getRemoteAddress(request));
+                /*更新用户的登陆信息*/
+                sysUserMapper.updateByPrimaryKey(user);
+                /*userVo和TSysUser没什么区别，只是增加了siteId*/
+                UserVo userVo = new UserVo();
+                BeanUtils.copyProperties(userVo, user);
+                if (userVo.getUserId() == 1) {
+                    userVo.setSiteId(1);
+                    userVo.setSiteName(siteName);
+                    /*设置session*/
                     session.setAttribute(CmsConst.SITE_USER_SESSION_KEY, userVo);
                     result.put("success", true);
                     result.put("message", "登录成功！");
                 } else {
-                /*当前用户没有可以管理的站点*/
-                    result.put("message", "当前用户没有可以管理的站点！");
+                    List<TCmsSite> sites = siteMapper.selectSitesByUserId(userVo.getUserId());
+                    if (!CmsUtil.isNullOrEmpty(sites)) {
+                        /*取出列表中第一个站点的Id,当作此登陆站点的标识*/
+                        for (TCmsSite site : sites) {
+                            userVo.setSiteId(site.getSiteId());
+                            userVo.setSiteName(site.getSiteName());
+                            break;
+                        }
+                        /*设置session*/
+                        session.setAttribute(CmsConst.SITE_USER_SESSION_KEY, userVo);
+                        result.put("success", true);
+                        result.put("message", "登录成功！");
+                    } else {
+                        /*当前用户没有可以管理的站点*/
+                        result.put("message", "当前用户没有可以管理的站点！");
+                    }
                 }
+            } catch (UnknownAccountException e) {
+                result.put("message", "账号输入错误！");
+            } catch (IncorrectCredentialsException e) {
+                result.put("message", "密码输入错误！");
+            } catch (LockedAccountException e) {
+                result.put("message", "当前账号已被停用！");
+            } catch (AuthenticationException ae) {
+                result.put("message", "账号或者密码输入错误！");
+            } catch (Exception e) {
+                result.put("message", "发生了一个错误！");
             }
-        } catch (UnknownAccountException e) {
-            result.put("message", "账号输入错误！");
-        } catch (IncorrectCredentialsException e){
-            result.put("message", "密码输入错误！");
-        } catch (LockedAccountException e){
-            result.put("message", "当前账号已被停用！");
-        } catch (AuthenticationException ae) {
-            result.put("message", "账号或者密码输入错误！");
-        }catch (Exception e){
-            result.put("message", "发生了一个错误！");
         }
         return result;
     }
