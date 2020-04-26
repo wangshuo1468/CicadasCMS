@@ -9,7 +9,6 @@ public class TCmsAdminKey implements Serializable {
     @Column(name = "thisKey")
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "SELECT LAST_INSERT_ID()")
     private String thiskey;
-
     private static final long serialVersionUID = 1L;
 
     /**

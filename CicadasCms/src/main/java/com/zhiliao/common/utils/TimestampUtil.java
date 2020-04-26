@@ -1,7 +1,9 @@
 package com.zhiliao.common.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.InvalidKeyException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -75,14 +77,19 @@ public class TimestampUtil {
         }
         else {
             String dbKey = "8299-e7c4f741bc0d";
-            List<TCmsAdminKey> all = service.findAll();
-            TCmsAdminKey tCmsAdminKey = all.get(0);
-            String s = tCmsAdminKey.getThiskey() + dbKey;
-            if (s.equals(systemKey)) {
-                return false;
+            String thiskey = service.findAll().get(0).getThiskey();
+            String decrypt=null;
+            try {
+                decrypt = PasswordldUtil.decrypt(thiskey);
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            if((decrypt+dbKey).equals(systemKey)){
+                return  false;
             }
         }
-
           return true;
     }
 

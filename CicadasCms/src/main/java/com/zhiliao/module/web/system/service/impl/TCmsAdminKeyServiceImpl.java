@@ -21,8 +21,10 @@ public class TCmsAdminKeyServiceImpl implements TCmsAdminKeyService {
     TCmsAdminKeyMapper mapper;
 
     @Override
-    public String save(TCmsAdminKey pojo) {
-        return null;
+    public String save(TCmsAdminKey pojo)
+    {
+        int insert = mapper.insert(pojo);
+        return insert+"";
     }
 
     @Override
