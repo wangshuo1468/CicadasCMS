@@ -30,8 +30,8 @@ import java.util.List;
 public class TimestampUtil {
     @Value("${system.key}")
     private   String systemKey;
-
-    private    final String times ="2020-04-24";
+    @Value("${system.countdown}")
+    private  String times ;
 
     @Autowired
     private TCmsAdminKeyService tCmsAdminKeyService;
@@ -41,12 +41,20 @@ public class TimestampUtil {
 
 
     public  boolean timeStamp(){
+        systemKey = systemKey.trim();
+        times=times.trim();
         if(systemKey == "" || systemKey.equals("") || systemKey.isEmpty() ||systemKey==null){
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date date = null;
+            String thisTime=null;
             try {
-                date = df.parse(times);
+                thisTime = PasswordldUtil.decrypt(times);
+                date = df.parse(thisTime);
             } catch (ParseException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (InvalidKeyException e) {
                 e.printStackTrace();
             }
             Calendar cal = Calendar.getInstance();

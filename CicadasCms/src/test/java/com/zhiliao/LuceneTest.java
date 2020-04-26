@@ -34,31 +34,31 @@ import java.util.List;
 @SpringBootTest
 public class LuceneTest {
 
-	@Autowired
-	private TCmsAdminKeyService service;
+    @Autowired
+    private TCmsAdminKeyService service;
 
-	@Test
-	public void create() {
-		TCmsAdminKey adminKey=new TCmsAdminKey();
-		String encrypt = PasswordldUtil.encrypt("4d72fc06-7f78-428b-");
-		adminKey.setThiskey(encrypt);
-		service.save(adminKey);
-}
-			@Test
-		public void jm(){
-				String thiskey = service.findAll().get(0).getThiskey();
-				String decrypt=null;
-				try {
-					 decrypt = PasswordldUtil.decrypt(thiskey);
-				} catch (InvalidKeyException e) {
-					e.printStackTrace();
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				if(decrypt.equals("4d72fc06-7f78-428b-")){
-					System.out.println("success");
-				}
-			}
+    @Test
+    public void create() {
+
+    }
+
+    @Test
+    public void jm() {
+        String thiskey = service.findAll().get(0).getThiskey();
+        String decrypt = null;
+        try {
+            decrypt = PasswordldUtil.decrypt(thiskey);
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if (decrypt.equals("4d72fc06-7f78-428b-")) {
+            System.out.println("success");
+        }
+    }
+
+
 
 
 }
