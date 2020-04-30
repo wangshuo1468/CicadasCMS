@@ -1,9 +1,9 @@
-package ${basePackage}.service.impl.${sign};
+package ${servicePackage}.impl;
 
-import ${basePackage}.dao.mapper.${sign}.${modelNameUpperCamel}Mapper;
-import ${basePackage}.model.${sign}.${modelNameUpperCamel};
-import ${basePackage}.service.${sign}.${modelNameUpperCamel}Service;
-import ${basePackage}.service.AbstractService;
+import ${mapperPackage}.${modelNameUpperCamel}Mapper;
+import ${modelPackage}.${modelNameUpperCamel};
+import ${servicePackage}.${modelNameUpperCamel}Service;
+import com.zhiliao.component.generator.service.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 

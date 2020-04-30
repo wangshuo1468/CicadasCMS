@@ -64,7 +64,7 @@ public class CodeGeneratorManager extends CodeGeneratorConfig {
         
         SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
         sqlMapGeneratorConfiguration.setTargetProject(PROJECT_PATH + RESOURCES_PATH);
-        sqlMapGeneratorConfiguration.setTargetPackage("mapper." + sign);
+        sqlMapGeneratorConfiguration.setTargetPackage("com.zhiliao.mybatis.mapper");
         context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
         
         // 增加 mapper 插件

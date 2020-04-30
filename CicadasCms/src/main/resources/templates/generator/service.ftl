@@ -1,6 +1,6 @@
-package ${basePackage}.service.${sign};
-import ${basePackage}.model.${sign}.${modelNameUpperCamel};
-import ${basePackage}.service.Service;
+package ${servicePackage};
+import ${modelPackage}.${modelNameUpperCamel};
+import com.zhiliao.component.generator.service.Service;
 
 /**
  *

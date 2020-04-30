@@ -20,13 +20,14 @@ public class ControllerGenerator extends CodeGeneratorManager implements CodeGen
 	@Override
 	public void genCode(String tableName, String modelName, String sign) {
 		Configuration cfg = getFreemarkerConfiguration();
-		String customMapping = "/" + sign + "/";
+//		String customMapping = "/" + sign + "/";
 		String modelNameUpperCamel = StringUtils.isNullOrEmpty(modelName) ? tableNameConvertUpperCamel(tableName) : modelName;
 		
-		Map<String, Object> data = getDataMapInit(tableName, modelName, sign, modelNameUpperCamel); 
+		Map<String, Object> data = getDataMapInit(tableName, modelName, sign, modelNameUpperCamel);
 		try {
-			File controllerFile = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_CONTROLLER+ customMapping
-						 + modelNameUpperCamel + "Controller.java");
+			File controllerFile = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_CONTROLLER+
+//					//customMapping
+						  modelNameUpperCamel + "Controller.java");
 	        if (!controllerFile.getParentFile().exists()) {
 	        	controllerFile.getParentFile().mkdirs();
 	        }
@@ -54,7 +55,8 @@ public class ControllerGenerator extends CodeGeneratorManager implements CodeGen
         data.put("modelNameUpperCamel", modelNameUpperCamel);
         data.put("modelNameLowerCamel", CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, modelNameUpperCamel));
         data.put("basePackage", BASE_PACKAGE);
-		
+		data.put("servicePackage", SERVICE_PACKAGE);
+		data.put("modelPackage",MODEL_PACKAGE);
 		return data;
 	}
 }
