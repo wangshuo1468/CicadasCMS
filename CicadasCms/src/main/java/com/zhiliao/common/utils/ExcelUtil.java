@@ -189,7 +189,7 @@ public class ExcelUtil {
                 result.add(obj);
             }
         }catch (Exception e) {
-            throw new RuntimeException("导如excel失败,["+e.getMessage()+"]");
+            throw new RuntimeException("导入excel失败,["+e.getMessage()+"]");
         }
         return result;
     }
@@ -242,7 +242,7 @@ public class ExcelUtil {
             }
         }catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("导如excel失败,["+e.getMessage()+"]");
+            throw new RuntimeException("导入excel失败,["+e.getMessage()+"]");
         }
         return result;
     }
