@@ -1,7 +1,6 @@
-<#--package ${basePackage}.${sign};-->
-package ${basePackage};
-import ${modelPackage}.${modelNameUpperCamel};
-import ${servicePackage}.${modelNameUpperCamel}Service;
+package com.zhiliao.module.web.cms;
+import com.zhiliao.mybatis.model.ConfigInfoAggr;
+import com.zhiliao.module.web.cms.service.ConfigInfoAggrService;
 import com.zhiliao.common.utils.JsonUtil;
 
 import com.github.pagehelper.PageHelper;
@@ -19,29 +18,29 @@ import java.util.Map;
 
 /**
  *
- * Created by ${author} on ${date}.
+ * Created by çç¡ on 2020/04/30.
  */
 @Controller
-@RequestMapping("/${baseRequestMapping}/")
-public class ${modelNameUpperCamel}Controller {
-    private final static Logger log = LoggerFactory.getLogger(${modelNameUpperCamel}Controller.class);
+@RequestMapping("/configInfoAggr/")
+public class ConfigInfoAggrController {
+    private final static Logger log = LoggerFactory.getLogger(ConfigInfoAggrController.class);
 
     @Autowired
-    ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
+    ConfigInfoAggrService configInfoAggrService;
 
   /**
   * 增加
   * @param </T>
   * @return Json
   */
-    @ApiOperation("${modelNameUpperCamel} 增加")
+@ApiOperation("ConfigInfoAggr 增加")
     @PostMapping("add")
     @ResponseBody
-    public Map add(${modelNameUpperCamel} ${modelNameLowerCamel}) {
+    public Map add(ConfigInfoAggr configInfoAggr) {
          try {
-             ${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
+             configInfoAggrService.save(configInfoAggr);
          } catch (Exception e) {
-          log.error("${modelNameUpperCamel}Controller add方法异常",e.getMessage());
+          log.error("ConfigInfoAggrController add方法异常",e.getMessage());
            e.printStackTrace();
           return JsonUtil.toMAP(false, "操作失败");
         }
@@ -54,14 +53,14 @@ public class ${modelNameUpperCamel}Controller {
     * @param id
     * @return Json
     */
-    @ApiOperation("${modelNameUpperCamel} 删除")
+    @ApiOperation("ConfigInfoAggr 删除")
     @GetMapping("delete")
     @ResponseBody
     public Map delete(@RequestParam Integer id) {
         try {
-            ${modelNameLowerCamel}Service.deleteById(id);
+            configInfoAggrService.deleteById(id);
         } catch (Exception e) {
-             log.error("${modelNameUpperCamel}Controller delete方法异常",e.getMessage());
+             log.error("ConfigInfoAggrController delete方法异常",e.getMessage());
             e.printStackTrace();
         return JsonUtil.toMAP(false, "删除失败");
         }
@@ -72,15 +71,15 @@ public class ${modelNameUpperCamel}Controller {
     * @param </T>
     * @return Json
     */
-    @ApiOperation("${modelNameUpperCamel} 修改")
+    @ApiOperation("ConfigInfoAggr 修改")
     @PostMapping("update")
     @ResponseBody
-    public Map update(${modelNameUpperCamel} ${modelNameLowerCamel}) {
+    public Map update(ConfigInfoAggr configInfoAggr) {
 
         try {
-            ${modelNameLowerCamel}Service.update(${modelNameLowerCamel});
+            configInfoAggrService.update(configInfoAggr);
         } catch (Exception e) {
-            log.error("${modelNameUpperCamel}Controller delete方法异常",e.getMessage());
+            log.error("ConfigInfoAggrController delete方法异常",e.getMessage());
                 e.printStackTrace();
             return JsonUtil.toMAP(false, "修改失败");
         }
@@ -93,9 +92,9 @@ public class ${modelNameUpperCamel}Controller {
     * @return Json
     */
     @GetMapping("detail")
-    public ${modelNameUpperCamel} detail(@RequestParam Integer id) {
-        ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
-        return ${modelNameLowerCamel};
+    public ConfigInfoAggr detail(@RequestParam Integer id) {
+        ConfigInfoAggr configInfoAggr = configInfoAggrService.findById(id);
+        return configInfoAggr;
     }
 
         /**
@@ -103,12 +102,12 @@ public class ${modelNameUpperCamel}Controller {
         * @param id
         * @return Json
         */
-        @ApiOperation("${modelNameUpperCamel} 根据id 查询")
+        @ApiOperation("ConfigInfoAggr 根据id 查询")
         @GetMapping("detailToJson")
         @ResponseBody
         public String detailToJson(@RequestParam Integer id) {
-             ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
-             return ${modelNameLowerCamel}.toString();
+        ConfigInfoAggr configInfoAggr = configInfoAggrService.findById(id);
+             return configInfoAggr.toString();
         }
 
     /**
@@ -117,15 +116,15 @@ public class ${modelNameUpperCamel}Controller {
     * @param pageSize
     * @return Json
     */
-    @ApiOperation("${modelNameUpperCamel} 查询全部")
+    @ApiOperation("ConfigInfoAggr 查询全部")
     @GetMapping("listToJson")
     @ResponseBody
     public String listToJson( @RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber,
     @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize) {
-             PageHelper.startPage(pageNumber, pageSize);
-             List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findAll();
-             PageInfo pageInfo = new PageInfo(list);
-             return JsonUtil.toSuccessResultJSON("请求成功",pageInfo.getList());
+        PageHelper.startPage(pageNumber, pageSize);
+        List<ConfigInfoAggr> list = configInfoAggrService.findAll();
+        PageInfo pageInfo = new PageInfo(list);
+        return JsonUtil.toSuccessResultJSON("请求成功",pageInfo.getList());
     }
 
         /**
@@ -135,10 +134,10 @@ public class ${modelNameUpperCamel}Controller {
         * @return List
         */
         @GetMapping("list")
-        public List<${modelNameUpperCamel}> list( @RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber,
+        public List<ConfigInfoAggr> list( @RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber,
                          @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize) {
                   PageHelper.startPage(pageNumber, pageSize);
-                  List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findAll();
+                  List<ConfigInfoAggr> list = configInfoAggrService.findAll();
                   PageInfo pageInfo = new PageInfo(list);
                   return pageInfo.getList();
         }

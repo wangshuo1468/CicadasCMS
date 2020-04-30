@@ -19,15 +19,15 @@ public class Swagger2Configuration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.zhiliao.module.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.zhiliao.module.web.cms"))
                 .paths(PathSelectors.any())
                 .build();
     }
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Cicadas Cms Api 接口")
+                .title("Cms Api 接口")
                 .description("")
-                .contact(new Contact("Jin","","jin@westboy.net"))
+                .contact(new Contact("Wangshuo","","1468282838@qq.com"))
                 .version("1.0")
                 .build();
     }

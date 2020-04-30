@@ -1,7 +1,6 @@
-<#--package ${basePackage}.${sign};-->
-package ${basePackage};
-import ${modelPackage}.${modelNameUpperCamel};
-import ${servicePackage}.${modelNameUpperCamel}Service;
+package com.zhiliao.module.web.cms;
+import com.zhiliao.mybatis.model.ConfigInfo;
+import com.zhiliao.module.web.cms.service.ConfigInfoService;
 import com.zhiliao.common.utils.JsonUtil;
 
 import com.github.pagehelper.PageHelper;
@@ -19,29 +18,29 @@ import java.util.Map;
 
 /**
  *
- * Created by ${author} on ${date}.
+ * Created by çç¡ on 2020/04/30.
  */
 @Controller
-@RequestMapping("/${baseRequestMapping}/")
-public class ${modelNameUpperCamel}Controller {
-    private final static Logger log = LoggerFactory.getLogger(${modelNameUpperCamel}Controller.class);
+@RequestMapping("/configInfo/")
+public class ConfigInfoController {
+    private final static Logger log = LoggerFactory.getLogger(ConfigInfoController.class);
 
     @Autowired
-    ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
+    ConfigInfoService configInfoService;
 
   /**
   * 增加
   * @param </T>
   * @return Json
   */
-    @ApiOperation("${modelNameUpperCamel} 增加")
+@ApiOperation("ConfigInfo 增加")
     @PostMapping("add")
     @ResponseBody
-    public Map add(${modelNameUpperCamel} ${modelNameLowerCamel}) {
+    public Map add(ConfigInfo configInfo) {
          try {
-             ${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
+             configInfoService.save(configInfo);
          } catch (Exception e) {
-          log.error("${modelNameUpperCamel}Controller add方法异常",e.getMessage());
+          log.error("ConfigInfoController add方法异常",e.getMessage());
            e.printStackTrace();
           return JsonUtil.toMAP(false, "操作失败");
         }
@@ -54,14 +53,14 @@ public class ${modelNameUpperCamel}Controller {
     * @param id
     * @return Json
     */
-    @ApiOperation("${modelNameUpperCamel} 删除")
+    @ApiOperation("ConfigInfo 删除")
     @GetMapping("delete")
     @ResponseBody
     public Map delete(@RequestParam Integer id) {
         try {
-            ${modelNameLowerCamel}Service.deleteById(id);
+            configInfoService.deleteById(id);
         } catch (Exception e) {
-             log.error("${modelNameUpperCamel}Controller delete方法异常",e.getMessage());
+             log.error("ConfigInfoController delete方法异常",e.getMessage());
             e.printStackTrace();
         return JsonUtil.toMAP(false, "删除失败");
         }
@@ -72,15 +71,15 @@ public class ${modelNameUpperCamel}Controller {
     * @param </T>
     * @return Json
     */
-    @ApiOperation("${modelNameUpperCamel} 修改")
+    @ApiOperation("ConfigInfo 修改")
     @PostMapping("update")
     @ResponseBody
-    public Map update(${modelNameUpperCamel} ${modelNameLowerCamel}) {
+    public Map update(ConfigInfo configInfo) {
 
         try {
-            ${modelNameLowerCamel}Service.update(${modelNameLowerCamel});
+            configInfoService.update(configInfo);
         } catch (Exception e) {
-            log.error("${modelNameUpperCamel}Controller delete方法异常",e.getMessage());
+            log.error("ConfigInfoController delete方法异常",e.getMessage());
                 e.printStackTrace();
             return JsonUtil.toMAP(false, "修改失败");
         }
@@ -93,9 +92,9 @@ public class ${modelNameUpperCamel}Controller {
     * @return Json
     */
     @GetMapping("detail")
-    public ${modelNameUpperCamel} detail(@RequestParam Integer id) {
-        ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
-        return ${modelNameLowerCamel};
+    public ConfigInfo detail(@RequestParam Integer id) {
+        ConfigInfo configInfo = configInfoService.findById(id);
+        return configInfo;
     }
 
         /**
@@ -103,12 +102,12 @@ public class ${modelNameUpperCamel}Controller {
         * @param id
         * @return Json
         */
-        @ApiOperation("${modelNameUpperCamel} 根据id 查询")
+        @ApiOperation("ConfigInfo 根据id 查询")
         @GetMapping("detailToJson")
         @ResponseBody
         public String detailToJson(@RequestParam Integer id) {
-             ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
-             return ${modelNameLowerCamel}.toString();
+        ConfigInfo configInfo = configInfoService.findById(id);
+             return configInfo.toString();
         }
 
     /**
@@ -117,15 +116,15 @@ public class ${modelNameUpperCamel}Controller {
     * @param pageSize
     * @return Json
     */
-    @ApiOperation("${modelNameUpperCamel} 查询全部")
+    @ApiOperation("ConfigInfo 查询全部")
     @GetMapping("listToJson")
     @ResponseBody
     public String listToJson( @RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber,
     @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize) {
-             PageHelper.startPage(pageNumber, pageSize);
-             List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findAll();
-             PageInfo pageInfo = new PageInfo(list);
-             return JsonUtil.toSuccessResultJSON("请求成功",pageInfo.getList());
+        PageHelper.startPage(pageNumber, pageSize);
+        List<ConfigInfo> list = configInfoService.findAll();
+        PageInfo pageInfo = new PageInfo(list);
+        return JsonUtil.toSuccessResultJSON("请求成功",pageInfo.getList());
     }
 
         /**
@@ -135,10 +134,10 @@ public class ${modelNameUpperCamel}Controller {
         * @return List
         */
         @GetMapping("list")
-        public List<${modelNameUpperCamel}> list( @RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber,
+        public List<ConfigInfo> list( @RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber,
                          @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize) {
                   PageHelper.startPage(pageNumber, pageSize);
-                  List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findAll();
+                  List<ConfigInfo> list = configInfoService.findAll();
                   PageInfo pageInfo = new PageInfo(list);
                   return pageInfo.getList();
         }
