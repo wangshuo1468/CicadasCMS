@@ -92,6 +92,7 @@ public class ${modelNameUpperCamel}Controller {
     * @param id
     * @return Json
     */
+    @ApiIgnore
     @GetMapping("detail")
     public ${modelNameUpperCamel} detail(@RequestParam Integer id) {
         ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
@@ -134,6 +135,7 @@ public class ${modelNameUpperCamel}Controller {
         * @param pageSize
         * @return List
         */
+        @ApiIgnore
         @GetMapping("list")
         public List<${modelNameUpperCamel}> list( @RequestParam(value = "pageNumber",defaultValue = "1") Integer pageNumber,
                          @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize) {
