@@ -14,7 +14,7 @@ public class CodeGeneratorMain {
 	private static final String MODEL_NAME = "ITest";
 	
 	private static final String[] TABLES = {
-			"config_info", "config_info_aggr"
+			"com_aa"
 	};
 	
 	/**
